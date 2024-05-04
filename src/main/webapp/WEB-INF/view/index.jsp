@@ -42,8 +42,8 @@
 									<td><%=todoBean.getId()%></td>
 									<td><%=todoBean.getTaskname()%></td>
 									<td><%=todoBean.getTaskurl()%></td>
-									<td><a href="TodoUpdate?id=<%=todoBean.getId()%>">Edit</a></td>
-									<td><a href="TodoDelete?id=<%=todoBean.getId()%>">Delete</a></td>
+									<td><a href="TodoUpdate?id=<%=todoBean.getId()%>" class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a></td>
+									<td><a href="TodoDelete?id=<%=todoBean.getId()%>" class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></a></td>
 								</tr>
 								<%
 								}
