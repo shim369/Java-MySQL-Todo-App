@@ -12,22 +12,53 @@ import beans.TodoBean;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class TodoLogic {
-	
-	public TodoBean getTodoBean(int id) throws SQLException, NamingException {
-		
-		TodoBean todoBean = new TodoBean();
-		
-		String sql = "select id, taskname, taskurl from todo where id=?";
-		
+
+	public void deleteTodo(int id) throws SQLException, NamingException {
+
+		String sql = "delete from todo where id=?";
+
 		try (Connection con = ConnectionBase.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);) {
-			
+
 			pstmt.setInt(1, id);
-			
+
 			System.out.println(pstmt.toString());
-			
+
+			pstmt.executeUpdate();
+		}
+	}
+
+	public void updateTodo(TodoBean todoBean) throws SQLException, NamingException {
+
+		String sql = "update todo set taskname=?, taskurl=? where id=?";
+		try (Connection con = ConnectionBase.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+			pstmt.setString(1, todoBean.getTaskname());
+			pstmt.setString(2, todoBean.getTaskurl());
+			pstmt.setInt(3, todoBean.getId());
+
+			System.out.println(pstmt.toString());
+
+			pstmt.executeUpdate();
+		}
+	}
+
+	public TodoBean getTodoBean(int id) throws SQLException, NamingException {
+
+		TodoBean todoBean = new TodoBean();
+
+		String sql = "select id, taskname, taskurl from todo where id=?";
+
+		try (Connection con = ConnectionBase.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+
+			pstmt.setInt(1, id);
+
+			System.out.println(pstmt.toString());
+
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				todoBean.setId(id);
 				todoBean.setTaskname(rs.getString("taskname"));
@@ -36,10 +67,10 @@ public class TodoLogic {
 		}
 		return todoBean;
 	}
-	
+
 	public TodoBean getTodoBean(HttpServletRequest request) {
 		TodoBean todoBean = new TodoBean();
-		
+
 		todoBean.setId(0);
 		todoBean.setTaskname(request.getParameter("taskname"));
 		todoBean.setTaskurl(request.getParameter("taskurl"));
