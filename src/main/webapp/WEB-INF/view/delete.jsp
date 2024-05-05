@@ -13,6 +13,7 @@
 TodoBean todoBean = (TodoBean) request.getAttribute("todoBean");
 %>
 <body>
+	<%@ include file="header.jsp"%>
 	<main>
 		<div class="container py-5 h-100">
 			<div
